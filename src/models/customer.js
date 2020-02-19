@@ -2,6 +2,8 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+//const Order = require('mongoose').model('Order').schema;
+const Order = require('../models/order');
 
 const schema = new Schema({
     name: {
@@ -15,7 +17,8 @@ const schema = new Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    order: [Order.schema],
 });
 
 module.exports = mongoose.model('Customer', schema);
