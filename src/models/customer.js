@@ -18,7 +18,7 @@ const schema = new Schema({
         type: String,
         required: true,
     },
-    order: [Order.schema],
+    order: Order.schema,
 });
 
 module.exports = mongoose.model('Customer', schema);
