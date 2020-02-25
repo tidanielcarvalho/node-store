@@ -9,7 +9,7 @@ const app = express();
 const router = express.Router();
 
 var options = { useFindAndModify: false, useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true };
-mongoose.connect('mongodb+srv://usuario_dev:uScscRDk1EjqqPeb@clusterapi-t6vp0.mongodb.net/test?retryWrites=true&w=majority', options);
+mongoose.connect(process.env.DB_CONNECT, options);
 
 // Load model
 const Product = require('./models/product');
@@ -32,6 +32,6 @@ app.use('/', indexRoute);
 app.use('/products', productRoute);
 app.use('/customers', customerRoute);
 app.use('/orders', orderRoute);
-app.use('/user', userRoute);
+app.use('/users', userRoute);
 
 module.exports = app;

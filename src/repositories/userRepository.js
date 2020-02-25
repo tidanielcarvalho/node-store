@@ -7,3 +7,10 @@ exports.create = async (data) => {
     var user = new User(data);
     await user.save();
 }
+
+exports.userFind = async (data) => {
+    var res = await User.findOne({
+        email: data.email,
+    });
+    return res
+}

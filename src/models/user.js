@@ -17,6 +17,13 @@ const schema = new Schema({
         type: String,
         required: true,
     },
+    created_at: {
+        type: Date,
+        default: Date.now()
+    },
+    created_by: {
+        type: String,
+    }
 });
 
 module.exports = mongoose.model('User', schema);
