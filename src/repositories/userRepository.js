@@ -14,3 +14,8 @@ exports.userFind = async (data) => {
     });
     return res
 }
+
+exports.userFindById = async (id) => {
+    var res = await User.findById(id);
+    return res
+}

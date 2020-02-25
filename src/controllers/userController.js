@@ -12,7 +12,6 @@ exports.notificationUser = async (mail) => {
 exports.createUser = async (req, res, next) => {
 
     let token = req.headers['x-api-key'];
-    console.log(token);
     var data = await authService.decodeToken(token);
 
     try {
@@ -56,6 +55,38 @@ exports.userAuth = async (req, res, next) => {
 
         return res.status(201).send({ 
             token: token, 
+            data: {
+                name: user.name,
+                email: user.email,
+            }
+        });        
+      
+    } catch (e) {
+        res.status(500).send({ message: 'Falha ao logar Usuário.', data: e });
+    }
+}
+
+exports.userRefreshAuth = async (req, res, next) => {
+    
+    let token = req.headers['x-api-key'];
+    var data = await authService.decodeToken(token);
+
+    try{
+        const user = await repository.userFindById(data.id);
+
+        if(!user){
+            return res.status(500).send({ message: 'Usuário não encontrado'});
+        }
+
+        // As informações passadas para o generate, podem ser resgatadas
+        const tokenRefresh = await authService.generateToken({
+            id: user._id,
+            name: user.name,
+            email: user.email,
+        });
+
+        return res.status(201).send({ 
+            token: tokenRefresh, 
             data: {
                 name: user.name,
                 email: user.email,
